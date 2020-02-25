@@ -7,22 +7,17 @@ class Sale < ApplicationRecord
 
 
 
-  def self.build_valid_sale(sale, sale_organizer_id)
-    begin
-      {
-        dump: sale,
-        title: sale['title'],
-        original_id: sale['sale_id'],
-        location: sale['location'],
-        currency: sale['sale_currency'],
-        start_date: Date.parse(sale['sale_start_date']),
-        end_date: Date.parse(sale['sale_end_date']),
-        total: total(sale),
-        sale_organizer_id: sale_organizer_id,
-      }
-    rescue StandardError => e
-      binding.pry
-    end
+  def self.build_valid_sale(sale)
+    {
+      dump: sale,
+      title: sale['title'],
+      original_id: sale['sale_id'],
+      location: sale['location'],
+      currency: sale['sale_currency'],
+      start_date: Date.parse(sale['sale_start_date']),
+      end_date: Date.parse(sale['sale_end_date']),
+      total: total(sale),
+    }
   end
 
   def self.total(sale)
