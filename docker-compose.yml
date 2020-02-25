@@ -1,0 +1,10 @@
+version: '3'
+services:
+  api:
+    build: .
+    environment:
+      - RAILS_ENV=docker_development
+    volumes:
+      - .:/artifacts_data_api
+    ports:
+      - "3000:3000"
