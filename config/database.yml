@@ -27,7 +27,8 @@ test:
   database: artifacts_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: artifacts_production
   encoding: unicode
   username: <%= ENV["DATABASE_USERNAME"] %>
