@@ -9,7 +9,4 @@ RUN bundle install
 COPY . .
 # Add a script to be executed every time the container starts.
 EXPOSE 3000
-RUN chmod +x ./entrypoint.sh
-# Start the main process.
-# alternative CMD tail -f /dev/null
-CMD ./entrypoint.sh
+RUN rm ./tmp/pids/server.pid
