@@ -9,4 +9,4 @@ RUN bundle install
 COPY . .
 # Add a script to be executed every time the container starts.
 EXPOSE 3000
-RUN rm ./tmp/pids/server.pid
+# RUN rm ./tmp/pids/server.pid
