@@ -1,2 +1,2 @@
-rm /src/tmp/pids/server.pid
+rm /artifacts_data_api/tmp/pids/server.pid
 bundle exec rails s -p 3000 -b '0.0.0.0'
