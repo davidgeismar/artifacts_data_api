@@ -22,3 +22,4 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+bundle exec rails s -p 3000 -b '0.0.0.0'
