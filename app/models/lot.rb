@@ -45,15 +45,11 @@ class Lot < ApplicationRecord
 
   # "GBP 200" can be a single value
   def self.extract_estimates(estimate_range, sale_currency)
-    begin
-      if estimate_range.present?
-        sanitaze_estimate = estimate_range.tr("#{sale_currency}, ", '')
-        /(\d+)?[-]?(\d+)?/.match(sanitaze_estimate)[1..2]
-      else
-        [nil, nil]
-      end
-    rescue StandardError => e
-      binding.pry
+    if estimate_range.present?
+      sanitaze_estimate = estimate_range.tr("#{sale_currency}, ", '')
+      /(\d+)?[-]?(\d+)?/.match(sanitaze_estimate)[1..2]
+    else
+      [nil, nil]
     end
   end
 
