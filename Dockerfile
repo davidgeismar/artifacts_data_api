@@ -11,4 +11,4 @@ COPY . .
 EXPOSE 3000
 RUN chmod +x ./entrypoint.sh
 # Start the main process.
-CMD ./entrypoint.sh
+CMD tail -f /dev/null
