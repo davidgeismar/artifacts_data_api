@@ -12,5 +12,7 @@ COPY . /artifacts_data_api
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 EXPOSE 3000
+RUN set -e
+# Remove a potentially pre-existing server.pid for Rails.
+RUN rm -f /artifacts_data_api/tmp/pids/server.pid
