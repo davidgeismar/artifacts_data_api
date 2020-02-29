@@ -4,6 +4,8 @@ class CreateSalesAndLots < ActiveRecord::Migration[6.0]
       t.string :company_name
     end
 
+    # check wtf is wrong with uuid
+
     create_table :sales do |t|
       t.jsonb :dump
       t.string :title
@@ -13,7 +15,7 @@ class CreateSalesAndLots < ActiveRecord::Migration[6.0]
       t.datetime :start_date
       t.datetime :end_date
       t.integer :total
-      t.references :sale_organizer, type: :uuid, index: true
+      t.references :sale_organizer, foreign_key: true
 
       t.timestamps
     end
@@ -41,8 +43,8 @@ class CreateSalesAndLots < ActiveRecord::Migration[6.0]
       t.string :currency
       t.integer :low_estimate
       t.integer :high_estimate
-      t.references :sale, type: :uuid, index: true
-      t.references :artist, type: :uuid, index: true
+      t.references :sale, foreign_key: true
+      t.references :artist, foreign_key: true
 
       t.timestamps
     end

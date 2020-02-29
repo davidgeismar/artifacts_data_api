@@ -1,5 +1,5 @@
 class Sale < ApplicationRecord
-  validates_uniqueness_of :original_id, scope: [:sale_organizer]
+  # validates_uniqueness_of :original_id, scope: [:sale_organizer]
 
   belongs_to :sale_organizer
   has_many :lots

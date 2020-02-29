@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2020_02_15_101004) do
     t.string "currency"
     t.integer "low_estimate"
     t.integer "high_estimate"
-    t.uuid "sale_id"
-    t.uuid "artist_id"
+    t.bigint "sale_id"
+    t.bigint "artist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["artist_id"], name: "index_lots_on_artist_id"
@@ -60,11 +60,14 @@ ActiveRecord::Schema.define(version: 2020_02_15_101004) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer "total"
-    t.uuid "sale_organizer_id"
+    t.bigint "sale_organizer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["original_id", "sale_organizer_id"], name: "index_sales_on_original_id_and_sale_organizer_id", unique: true
     t.index ["sale_organizer_id"], name: "index_sales_on_sale_organizer_id"
   end
 
+  add_foreign_key "lots", "artists"
+  add_foreign_key "lots", "sales"
+  add_foreign_key "sales", "sale_organizers"
 end
