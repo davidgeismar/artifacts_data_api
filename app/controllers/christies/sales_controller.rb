@@ -9,4 +9,7 @@ class Christies::SalesController < ApplicationController
     valid_lots = lots.map {|lot| Lot.build_valid_lot(lot, sale.id, sale.currency)}
     Lot.insert_all(valid_lots)
   end
+  # ActiveModel::RangeError
+  # ActiveModel::RangeError (2443679000 is out of range for ActiveModel::Type::Integer with limit 4 bytes):
+  # "8780" sale_id
 end

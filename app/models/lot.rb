@@ -27,8 +27,11 @@ class Lot < ApplicationRecord
   end
 
   def self.extract_artist(title1)
-    if /^([^(*]+).+?(\d+)-.*?(\d+)/.match(title1)
-      artist, birth, death = /^([^*]+).+?([\d\\]+).*?-.*?([\d\\]+)?/.match(title1)[1..3]
+    if /^([^*]+).*?\(.*?(\d+)-.*?(\d+)\)/.match(title1)
+      artist, birth, death = /^([^*]+).*?\(.*?(\d+)-.*?(\d+)\)/.match(title1)[1..3]
+      artist = artist.gsub(/\b(Attributed to|Circle of)\b/, '')&.strip
+      birth = birth&.strip
+      death = death&.strip
       existing_artist = Artist.where(full_name: artist, birth_year: birth, death_year: death).first
       if existing_artist.present?
         existing_artist.id
