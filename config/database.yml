@@ -16,7 +16,7 @@ development:
 docker_development:
   <<: *default
   username: davidgeismar
-  database: artifacts_docker_development
+  database: artifacts_development
   host: host.docker.internal
 
 # Warning: The database defined as "test" will be erased and
