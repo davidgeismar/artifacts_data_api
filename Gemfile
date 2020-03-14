@@ -23,16 +23,16 @@ gem 'google-cloud-vision'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 
-
+gem 'dotenv-rails', groups: [:development, :test, :docker_development]
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-group :development, :test do
+group :development, :test, :docker_development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry-byebug'
 end
 
-group :development do
+group :development, :docker_development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
