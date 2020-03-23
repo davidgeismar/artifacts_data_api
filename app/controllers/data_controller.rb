@@ -26,6 +26,7 @@ class DataController < ApplicationController
     data = {
       salesNumber: artist.lots.pluck(:sale_id).uniq.count,
       totalSalesAmount: artist.lots.pluck(:primary_price).reduce(:+),
+      performance: compute_artist_performance(artist.lots),
       artistName: artist.full_name,
       lots: lots,
       linePlot: {
@@ -43,6 +44,11 @@ class DataController < ApplicationController
       max: max
     }
     render json: data
+  end
+
+
+  def compute_artist_performance(artist_lots)
+    artist_lots.reduce(0) {|sum, lot| sum + (lot.primary_price.to_f / lot.low_estimate.to_f) + (lot.primary_price.to_f / lot.high_estimate.to_f)} / artist_lots.count.to_f
   end
 
   def build_artist_data(lot)
