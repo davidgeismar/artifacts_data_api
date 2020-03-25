@@ -1,10 +1,41 @@
 version: '3'
 services:
-  api:
-    build: .
+  sidekiq:
+    image: davidgeismar/artifacts-scrapper:without-db
     environment:
-      - RAILS_ENV=docker_development
+      - REDIS_URL=redis://redis-server:6379/0
+      - ARTIFACTS_ENV=docker_production
+      - DATA_API_BASE=http://data_api:3000
+    depends_on:
+      - "redis-server"
+      - "data_api"
+      - "scrapper"
+    command: "bundle exec sidekiq -r ./artifacts_scrapper.rb 2>&1 | tee ./log/sidekiq.log"
+  redis-server:
+    image: redis
+  scrapper:
+    command: 'ruby scrap_sources.rb'
+    image: davidgeismar/artifacts-scrapper:without-db
+    environment:
+      - REDIS_URL=redis://redis-server:6379/0
+      - ARTIFACTS_ENV=docker_production
+      - DATA_API_BASE=http://data_api:3000
     volumes:
-      - .:/artifacts_data_api
-    ports:
-      - "3000:3000"
+      - ./logs/artifacts_scrapper:/usr/src/artifacts_scrapper/log
+    depends_on:
+      - "data_api"
+      - "redis-server"
+  data_api:
+    entrypoint: /artifacts_data_api/entrypoint.sh
+    image: davidgeismar/artifacts_data_api:latest
+    command: 'rails s'
+    volumes:
+      - ./logs/artifacts_data_api:/artifacts_data_api/log
+    environment:
+        - RAILS_ENV=production
+        - SECRET_KEY_BASE=production_secret
+        - DB_PASSWORD=artifacts
+        - DB_USERNAME=postgres
+        - DB_URL=artifacts-test.cndqyekjgsit.eu-west-3.rds.amazonaws.com
+        - DB_PORT=5432
+        - DB_NAME=artifacts-test

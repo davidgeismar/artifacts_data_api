@@ -9,6 +9,12 @@ class Christies::SalesController < ApplicationController
     valid_lots = lots.map {|lot| Lot.build_valid_lot(lot, sale.id, sale.currency)}
     Lot.insert_all(valid_lots)
   end
+
+  def bulk_month_create
+    sales = JSON.parse(params[:data])
+    sales_valid = sales.map{|sale| Sale.build_valid_sale(sale['sale_detail'], @@sale_organizer.id)}
+    Sale.insert_all(sales_valid)
+  end
   # ActiveModel::RangeError
   # ActiveModel::RangeError (2443679000 is out of range for ActiveModel::Type::Integer with limit 4 bytes):
   # "8780" sale_id

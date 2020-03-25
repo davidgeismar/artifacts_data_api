@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :christies do
     resources :sales, only: [:create]
+    post 'sales/bulk_month', to: 'sales#bulk_month_create'
     resources :lots, only: [:create]
   end
 
