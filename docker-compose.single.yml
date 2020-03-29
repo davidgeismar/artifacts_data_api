@@ -1,0 +1,12 @@
+# file that builds the current service onkly
+version: '3'
+services:
+  data_api:
+    volumes:
+      - ./logs/artifacts_data_api:/artifacts_data_api/log
+    build: ./
+    entrypoint: ./entrypoint.sh
+    command: 'rails server -b 0.0.0.0'
+    environment:
+      - RAILS_ENV=docker_development
+      - SECRET_KEY_BASE=docker_development_secret
